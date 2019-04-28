@@ -50,7 +50,7 @@ public class dvlaExcel_SD extends DriverClass {
 
                     }
                 }
-// test comit 2nd time
+// test comit
         }
 
         driver.findElement(By.id("Vrm")).sendKeys(RegistrationNo.get(0));

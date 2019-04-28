@@ -7,7 +7,7 @@ Feature:
     When I click continue button
     Then I should see url "https://vehicleenquiry.service.gov.uk/ConfirmVehicle"
     And I should reading excel file Reg no as "BC04 RWZ"
-   # And I should reading excel file Reg no as "FORD"
+   And I should reading excel file Reg no as "FORD"
    # And I should reading excel file Reg no as " SILVER"
     And I click No, search again check button
     When I click continue

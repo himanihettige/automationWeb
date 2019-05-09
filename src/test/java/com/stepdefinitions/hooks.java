@@ -1,7 +1,9 @@
 package com.stepdefinitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.When;
 
 import java.io.IOException;
 
@@ -24,4 +26,5 @@ public class hooks {
        //driverCls.closeBrowser();
 
     }
+
 }

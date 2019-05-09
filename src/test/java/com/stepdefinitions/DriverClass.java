@@ -13,58 +13,60 @@ import java.util.Properties;
 public class DriverClass {
 
     public static WebDriver driver;
-
+    String isAPI;
 
     public void openBrowser() throws IOException {
 
         String browser = System.getProperty("browser");
+        isAPI = System.getProperty("isAPI");
 
-        if (browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
-        }else{
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+        if (isAPI.equalsIgnoreCase("FALSE")) {
+
+            if (browser.equalsIgnoreCase("firefox")) {
+                WebDriverManager.firefoxdriver().setup();
+                driver = new FirefoxDriver();
+            } else {
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
+            }
+
+
+            // driver.get("http://automationpractice.com/index.php");
+
+            String env = System.getProperty("env");
+            String path = System.getProperty("user.dir");
+            String file = null;
+
+            if (env.equalsIgnoreCase("qa")) {
+                file = path + "/src/test/java/com/propertyfiles/environment_qa.properties";
+
+            } else if (env.equalsIgnoreCase("uat")) {
+                file = path + "/src/test/java/com/propertyfiles/environment_uat.properties";
+
+            } else if (env.equalsIgnoreCase("prod")) {
+                file = path + "/src/test/java/com/propertyfiles/environment_prod.properties";
+            }
+
+            Properties properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            properties.load(fileInputStream);
+            System.out.println(properties.getProperty("url"));
+            System.out.println(properties.getProperty("username"));
+
+            driver.get(properties.getProperty("url"));
+
+
+            driver.manage().window().maximize();
+
         }
-
-
-       // driver.get("http://automationpractice.com/index.php");
-
-        String env=System.getProperty("env");
-        String path=System.getProperty("user.dir");
-        String file=null;
-
-        if(env.equalsIgnoreCase("qa")){
-            file=path+"/src/test/java/com/propertyfiles/environment_qa.properties";
-
-        }
-        else if(env.equalsIgnoreCase("uat")){
-            file=path+"/src/test/java/com/propertyfiles/environment_uat.properties";
-
-        }
-        else if(env.equalsIgnoreCase("prod")){
-            file=path+"/src/test/java/com/propertyfiles/environment_prod.properties";
-        }
-
-        Properties properties=new Properties();
-        FileInputStream fileInputStream=new FileInputStream(file);
-
-        properties.load(fileInputStream);
-        System.out.println(properties.getProperty("url"));
-        System.out.println(properties.getProperty("username"));
-
-        driver.get(properties.getProperty("url"));
-
-
-        driver.manage().window().maximize();
-
     }
 
 
-
     public void closeBrowser (){
-        driver.close();
+        if(isAPI.equalsIgnoreCase("FALSE")) {
+            driver.close();
 
-
+        }
     }
 }
